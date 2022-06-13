@@ -1,8 +1,25 @@
-﻿@{
+﻿@* Geçiçi yapıyoruz, panik yok! *@
+@using ApplicationCore.Interfaces
+@using ApplicationCore.Entities
+@inject IRepository<Product> productRepo
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<h1>Products</h1>
+
+<div class="row">
+    @foreach (var item in await productRepo.GetAllAsync())
+    {
+        <div class="col-md-3">
+            <div class="card mb-2">
+                <div class="card-body">
+                    <img src="~/img/products/@item.PictureUri" alt="@item.Name" class="w-100" />
+                    <p class="h6 mt-2" style="height: 3.6rem; overflow: hidden">@item.Name</p>
+                    <p class="mt-2">@item.Price.ToString("c2")</p>
+                </div>
+            </div>
+        </div>
+    }
 </div>

@@ -24,9 +24,13 @@ namespace Web.Services
             _categoryRepo = categoryRepo;
         }
 
-        public async Task<HomeViewModel> GetHomeViewModelAsync(int? brandId, int? categoryId)
+        public async Task<HomeViewModel> GetHomeViewModelAsync(int? brandId, int? categoryId, int pageId)
         {
-            var specProducts = new ProductsFilterSpecification(brandId, categoryId);
+            int skip = (pageId - 1) * Constants.ITEMS_PER_PAGE;
+            int take = Constants.ITEMS_PER_PAGE;
+            var specProducts = new ProductsFilterSpecification(brandId, categoryId, skip, take);
+            var specAllProducts = new ProductsFilterSpecification(brandId, categoryId);
+            var allProductsCount = await _productRepo.CountAsync(specAllProducts);
             var products = await _productRepo.GetAllAsync(specProducts);
 
             var vm = new HomeViewModel()
@@ -44,7 +48,13 @@ namespace Web.Services
                 Brands = await GetBrandsAsync(),
                 Categories = await GetCategoriesAsync(),
                 BrandId = brandId,
-                CategoryId = categoryId
+                CategoryId = categoryId,
+                PaginationInfo = new PaginationInfoViewModel()
+                {
+                    CurrentPage = pageId,
+                    TotalItems = allProductsCount,
+                    ItemsOnPage = products.Count,
+                }
             };
 
             return vm;

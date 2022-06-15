@@ -1,4 +1,4 @@
-using ApplicationCore.Interfaces;
+﻿using ApplicationCore.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Builder;
@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Web.Interfaces;
@@ -67,6 +68,16 @@ namespace Web
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+
+            var ci = new CultureInfo("en-US");
+            ci.NumberFormat.CurrencySymbol = "₺";
+            var supportedCultures = new[] { ci };
+            app.UseRequestLocalization(options =>
+            {
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+            });
+
             app.UseStaticFiles();
 
             app.UseRouting();

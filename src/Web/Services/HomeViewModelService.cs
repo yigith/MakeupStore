@@ -1,5 +1,6 @@
 ﻿using ApplicationCore.Entities;
 using ApplicationCore.Interfaces;
+using ApplicationCore.Specifications;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
@@ -23,9 +24,10 @@ namespace Web.Services
             _categoryRepo = categoryRepo;
         }
 
-        public async Task<HomeViewModel> GetHomeViewModelAsync()
+        public async Task<HomeViewModel> GetHomeViewModelAsync(int? brandId, int? categoryId)
         {
-            var products = await _productRepo.GetAllAsync();
+            var specProducts = new ProductsFilterSpecification(brandId, categoryId);
+            var products = await _productRepo.GetAllAsync(specProducts);
 
             var vm = new HomeViewModel()
             {
@@ -40,7 +42,9 @@ namespace Web.Services
                     }
                 ).ToList(),
                 Brands = await GetBrandsAsync(),
-                Categories = await GetCategoriesAsync()
+                Categories = await GetCategoriesAsync(),
+                BrandId = brandId,
+                CategoryId = categoryId
             };
 
             return vm;

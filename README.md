@@ -41,3 +41,7 @@ https://gist.github.com/yigith/c6f999788b833dc3d22ac6332a053dd1
 
 https://docs.microsoft.com/en-us/aspnet/core/fundamentals/localization?view=aspnetcore-5.0#use-a-custom-provider
 
+https://sweetalert2.github.io/#examples
+
+https://codepen.io/yigith/pen/XWZGwyJ
+

@@ -3,12 +3,6 @@
     font-weight: 400;
 }
 
-a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
-}
-
 /* Sticky footer styles
 -------------------------------------------------- */
 .border-top {
@@ -57,4 +51,16 @@ body {
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
+}
+
+/* Sweet Alert
+-------------------------------------------------- */
+h2.swal2-title {
+    letter-spacing: 1px;
+}
+
+/* Basket
+-------------------------------------------------- */
+.number-input > .quantity {
+    width: 70px;
 }

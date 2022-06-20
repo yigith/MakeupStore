@@ -40,6 +40,24 @@ namespace ApplicationCore.Services
             return basket;
         }
 
+        public async Task DeleteBasketAsync(string buyerId)
+        {
+            var specBasket = new BasketSpecification(buyerId);
+            var basket = await _basketRepo.FirstOrDefaultAsync(specBasket);
+            if (basket != null)
+            {
+                await _basketRepo.DeleteAsync(basket);
+            }
+        }
+
+        public async Task DeleteBasketItemAsync(string buyerId, int basketItemId)
+        {
+            var basket = await GetBasketAsync(buyerId);
+            var basketItem = basket.Items.FirstOrDefault(x => x.Id == basketItemId);
+            basket.Items.Remove(basketItem);
+            await _basketRepo.UpdateAsync(basket);
+        }
+
         public async Task<Basket> GetBasketAsync(string buyerId)
         {
             var specBasket = new BasketWithItemsSpecification(buyerId);
@@ -51,6 +69,30 @@ namespace ApplicationCore.Services
             if (buyerId == null) return 0;
             var basket = await GetBasketAsync(buyerId);
             return basket == null ? 0 : basket.Items.Sum(x => x.Quantity);
+        }
+
+        public async Task TransferBasketAsync(string sourceBuyerId, string targetBuyerId)
+        {
+            if (sourceBuyerId == null || targetBuyerId == null) return;
+            var sourceBasket = await GetBasketAsync(sourceBuyerId);
+            if (sourceBasket == null || sourceBasket.Items.Count == 0) return;
+            var targetBasket = await GetBasketAsync(targetBuyerId) ?? await _basketRepo.AddAsync(new Basket(targetBuyerId));
+
+            foreach (var sourceItem in sourceBasket.Items)
+            {
+                var targetItem = targetBasket.Items.FirstOrDefault(x => x.ProductId == sourceItem.ProductId);
+
+                if (targetItem == null)
+                {
+                    targetBasket.Items.Add(new BasketItem() { ProductId = sourceItem.ProductId, Quantity = sourceItem.Quantity });
+                }
+                else
+                {
+                    targetItem.Quantity += sourceItem.Quantity;
+                }
+            }
+            await _basketRepo.UpdateAsync(targetBasket);
+            await _basketRepo.DeleteAsync(sourceBasket);
         }
     }
 }

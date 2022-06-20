@@ -75,5 +75,15 @@ namespace Web.Services
                 ).ToList()
             };
         }
+
+        public async Task DeleteBasketAsync()
+        {
+            await _basketService.DeleteBasketAsync(BuyerId);
+        }
+
+        public async Task DeleteBasketItemAsync(int basketItemId)
+        {
+            await _basketService.DeleteBasketItemAsync(BuyerId, basketItemId);
+        }
     }
 }

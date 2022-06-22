@@ -71,6 +71,24 @@ namespace ApplicationCore.Services
             return basket == null ? 0 : basket.Items.Sum(x => x.Quantity);
         }
 
+        public async Task<Basket> SetQuantities(string buyerId, Dictionary<int, int> quantities)
+        {
+            var basket = await GetBasketAsync(buyerId);
+            if (basket == null) return null;
+
+            foreach (var item in basket.Items)
+            {
+                try
+                {
+                    item.Quantity = quantities[item.Id];
+                }
+                catch (Exception) {}
+            }
+
+            await _basketRepo.UpdateAsync(basket);
+            return basket;
+        }
+
         public async Task TransferBasketAsync(string sourceBuyerId, string targetBuyerId)
         {
             if (sourceBuyerId == null || targetBuyerId == null) return;

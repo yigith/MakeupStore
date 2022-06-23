@@ -226,7 +226,6 @@ namespace Infrastructure.Data.Migrations
                                 .HasColumnType("character varying(90)");
 
                             b1.Property<string>("State")
-                                .IsRequired()
                                 .HasMaxLength(60)
                                 .HasColumnType("character varying(60)");
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using ApplicationCore.Entities;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Web.Models;
 
@@ -16,6 +17,8 @@ namespace Web.Interfaces
 
         Task DeleteBasketItemAsync(int basketItemId);
 
-        Task<BasketViewModel> SetQuantities(Dictionary<int, int> quantities);
+        Task<BasketViewModel> SetQuantitiesAsync(Dictionary<int, int> quantities);
+
+        Task<OrderViewModel> CompleteCheckoutAsync(Address address);
     }
 }

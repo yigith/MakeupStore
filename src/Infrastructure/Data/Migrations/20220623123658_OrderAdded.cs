@@ -18,7 +18,7 @@ namespace Infrastructure.Data.Migrations
                     OrderDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     ShipToAddress_Street = table.Column<string>(type: "character varying(180)", maxLength: 180, nullable: false),
                     ShipToAddress_City = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    ShipToAddress_State = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: false),
+                    ShipToAddress_State = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: true),
                     ShipToAddress_Country = table.Column<string>(type: "character varying(90)", maxLength: 90, nullable: false),
                     ShipToAddress_ZipCode = table.Column<string>(type: "character varying(18)", maxLength: 18, nullable: false)
                 },

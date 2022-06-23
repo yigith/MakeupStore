@@ -21,7 +21,7 @@ namespace Infrastructure.Data.Config
                 x.WithOwner();
                 x.Property(a => a.Street).IsRequired().HasMaxLength(180);
                 x.Property(a => a.City).IsRequired().HasMaxLength(100);
-                x.Property(a => a.State).IsRequired().HasMaxLength(60);
+                x.Property(a => a.State).HasMaxLength(60);
                 x.Property(a => a.Country).IsRequired().HasMaxLength(90);
                 x.Property(a => a.ZipCode).IsRequired().HasMaxLength(18);
             });

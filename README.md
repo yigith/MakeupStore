@@ -22,6 +22,9 @@ Install-Package Microsoft.EntityFrameworkCore -v 5.0.17
 Install-Package Npgsql.EntityFrameworkCore.PostgreSQL -v 5.0.10
 Install-Package Ardalis.Specification.EntityFrameworkCore -v 5.2.0
 Install-Package Microsoft.AspNetCore.Identity.EntityFrameworkCore -v 5.0.17
+
+/UnitTests
+Install-Package Moq
 ```
 
 ## Migrations
@@ -48,4 +51,10 @@ https://codepen.io/yigith/pen/XWZGwyJ
 https://docs.microsoft.com/en-us/aspnet/core/fundamentals/middleware/write?view=aspnetcore-5.0
 
 https://getbootstrap.com/docs/4.6/examples/checkout/
+
+https://docs.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/
+
+https://github.com/dotnet-architecture/eShopOnWeb
+
+https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test
 

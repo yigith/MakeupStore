@@ -1,4 +1,5 @@
 ﻿using ApplicationCore.Entities;
+using ApplicationCore.Exceptions;
 using ApplicationCore.Interfaces;
 using ApplicationCore.Specifications;
 using System;
@@ -73,6 +74,9 @@ namespace ApplicationCore.Services
 
         public async Task<Basket> SetQuantities(string buyerId, Dictionary<int, int> quantities)
         {
+            if (quantities.Any(x => x.Value < 1))
+                throw new NonpositiveQuantityException();
+
             var basket = await GetBasketAsync(buyerId);
             if (basket == null) return null;
 
